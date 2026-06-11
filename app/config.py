@@ -1,4 +1,4 @@
-from pydantic import Field, PostgresDsn, RedisDsn, field_validator
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
@@ -8,8 +8,8 @@ class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
 
     # DB settings
-    POSTGRES_DSN: PostgresDsn | None = None
-    REDIS_DSN: RedisDsn | None = None
+    POSTGRES_DSN: str | None = None
+    REDIS_DSN: str | None = None
 
     # Pydantic configuration
     model_config = SettingsConfigDict(
