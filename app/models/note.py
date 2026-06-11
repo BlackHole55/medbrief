@@ -8,7 +8,7 @@ from uuid import UUID, uuid4
 if TYPE_CHECKING:
     from app.models.summary import SummaryMdl
 
-class NoteMdls(Base):
+class NoteMdl(Base):
     __tablename__ = "notes"
 
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
