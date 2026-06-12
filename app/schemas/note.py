@@ -1,10 +1,11 @@
-from pydantic import BaseModel, Field, ConfigDict
+from typing import Optional
+from pydantic import BaseModel, Field, ConfigDict, AliasPath
 from uuid import UUID
 from datetime import datetime
 from app.models import SummaryStatus
 from app.schemas.summary import SummaryOut
 
-class NoteCreated(BaseModel):
+class NoteCreatedIn(BaseModel):
     doctor_id: UUID
     patient_id: UUID
     clinical_text: str = Field(
@@ -19,7 +20,10 @@ class NoteCreatedOut(BaseModel):
     id: UUID
     doctor_id: UUID
     patient_id: UUID
-    summary_status: SummaryStatus = Field(default=SummaryStatus.PENDING)
+    summary_status: SummaryStatus = Field(
+        default=SummaryStatus.PENDING, 
+        validation_alias=AliasPath("summary", "status")
+    )
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -29,6 +33,6 @@ class NoteOut(BaseModel):
     patient_id: UUID
     clinical_text: str
     created_at: datetime
-    summary: SummaryOut | None = None
+    summary: Optional[SummaryOut] = None
 
     model_config = ConfigDict(from_attributes=True)
