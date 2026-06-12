@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, AliasPath
 from uuid import UUID
 from app.models import SummaryStatus
 from datetime import datetime
@@ -25,6 +25,7 @@ class PatientSummaryOut(BaseModel):
     )
     clinical_text: str | None = Field(
         default=None,
+        validation_alias=AliasPath("note", "clinical_text"),
         description="The raw doctor note, only populated if show_original is True"
     )
     model_config = ConfigDict(from_attributes=True)
