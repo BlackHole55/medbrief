@@ -1,9 +1,9 @@
-from app.schemas.note import NoteCreate, NoteCreatedOut, NoteOut
+from app.schemas.note import NoteCreatedIn, NoteCreatedOut, NoteOut
 from app.schemas.summary import SummaryOut, SummaryApprove, PatientSummaryOut
 
 # Explicitly declare what is publically accessible when importing from app.schemas
 __all__ = [
-    "NoteCreate",
+    "NoteCreatedIn",
     "NoteCreatedOut",
     "NoteOut",
     "SummaryOut",
