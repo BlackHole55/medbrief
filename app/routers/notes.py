@@ -11,6 +11,7 @@ from app.db import get_db
 
 router = APIRouter(prefix="/notes", tags=["Notes"])
 
+# TODO: fix Broken object level authorization using authorization of integrated system
 @router.post("", response_model=NoteCreatedOut, status_code=status.HTTP_201_CREATED)
 async def create_note(payload: NoteCreatedIn, db: AsyncSession = Depends(get_db)):
     new_note = NoteMdl(

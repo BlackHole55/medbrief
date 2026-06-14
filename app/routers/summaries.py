@@ -11,6 +11,7 @@ from app.db import get_db
 
 router = APIRouter(prefix="/summaries", tags=["Summaries"])
 
+# TODO: fix Broken object level authorization using authorization of integrated system
 @router.get("/{summary_id}", response_model=SummaryOut)
 async def get_summary(summary_id: UUID, db: AsyncSession = Depends(get_db)):
     query = (
