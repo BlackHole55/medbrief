@@ -17,7 +17,7 @@ async def create_note(payload: NoteCreatedIn, db: AsyncSession = Depends(get_db)
     new_note = NoteMdl(
         doctor_id=payload.doctor_id,
         patient_id=payload.patient_id,
-        clinical_note=payload.clinical_note,
+        clinical_text=payload.clinical_text,
     )
     db.add(new_note)
     await db.flush()
