@@ -9,7 +9,8 @@ class Settings(BaseSettings):
 
     # DB settings
     POSTGRES_DSN: str | None = None
-    REDIS_DSN: str | None = None
+    CELERY_BROKER_URL: str | None = None
+    CELERY_BACKEND_URL: str | None = None
 
     # Pydantic configuration
     model_config = SettingsConfigDict(
