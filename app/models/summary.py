@@ -14,6 +14,7 @@ class SummaryStatus(str, enum.Enum):
     READY = "ready"
     APPROVED = "approved"
     PUBLISHED = "published"
+    GENERATING = "generating"
 
 class SummaryMdl(Base):
     __tablename__ = "summaries"
