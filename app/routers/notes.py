@@ -8,6 +8,7 @@ from typing import List
 from app.schemas import NoteCreatedOut, NoteCreatedIn, NoteOut
 from app.models import NoteMdl, SummaryMdl, SummaryStatus
 from app.db import get_db
+from app.workers import generate_summary_task
 
 router = APIRouter(prefix="/notes", tags=["Notes"])
 
@@ -32,7 +33,7 @@ async def create_note(payload: NoteCreatedIn, db: AsyncSession = Depends(get_db)
     await db.commit()
     await db.refresh(new_note, attribute_names=["summary"])
 
-    # TODO: generate_note_summary_task.delay(note_id=str(new_note.id))
+    generate_summary_task(note_id=str(new_note.id))
     print(f"[STUB] Enqueued Celery task for note_id: {new_note.id}")
 
     return new_note
