@@ -33,7 +33,7 @@ async def create_note(payload: NoteCreatedIn, db: AsyncSession = Depends(get_db)
     await db.commit()
     await db.refresh(new_note, attribute_names=["summary"])
 
-    generate_summary_task(note_id=str(new_note.id))
+    generate_summary_task.delay(str(new_note.id))
     print(f"[STUB] Enqueued Celery task for note_id: {new_note.id}")
 
     return new_note
