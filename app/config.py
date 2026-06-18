@@ -19,7 +19,7 @@ class Settings(BaseSettings):
         extra="ignore"
     ) 
 
-    @field_validator("POSTGRES_DSN", "REDIS_DSN", mode="before")
+    @field_validator("POSTGRES_DSN", "CELERY_BROKER_URL", "CELERY_BACKEND_URL", mode="before")
     @classmethod
     def assemble_dsn_strings(cls, v: any) -> str:
         if isinstance(v, str):
