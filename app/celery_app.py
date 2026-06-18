@@ -13,6 +13,9 @@ celery_app = Celery(
 )
 
 celery_app.conf.update(
+    imports=("app.workers",),
+    task_track_started=True,
+
     # Enforce JSON for security and language interoperability. 
     # Avoid pickle unless you absolutely need to pass complex Python objects.
     task_serializer="json",
