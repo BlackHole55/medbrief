@@ -2,6 +2,8 @@ import asyncio
 from uuid import UUID
 from celery.utils.log import get_task_logger
 from datetime import datetime, timezone
+from sqlalchemy.orm import selectinload
+from sqlalchemy.future import select
 
 from app.models import NoteMdl, SummaryMdl, SummaryStatus
 from app.db import get_worker_db
@@ -16,7 +18,13 @@ async def _run(note_id: UUID) -> None:
     """
 
     async with get_worker_db() as db:
-        note = await db.get(NoteMdl, note_id)
+        query = (
+            select(NoteMdl)
+            .where(NoteMdl.id == note_id)
+            .options(selectinload(NoteMdl.summary))
+        )
+        result = await db.execute(query)
+        note = result.scalars().first()
 
         if not note:
             logger.warning(f"Task aborted. Note {note_id} not found or was deleted.")
