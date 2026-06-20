@@ -8,6 +8,7 @@ from sqlalchemy.future import select
 from app.models import NoteMdl, SummaryMdl, SummaryStatus
 from app.db import get_worker_db
 from app.celery_app import celery_app
+from app.services import gemini_service
 
 logger = get_task_logger(__name__)
 
@@ -44,15 +45,15 @@ async def _run(note_id: UUID) -> None:
         logger.info(f"Summary generation status set to GENERATING for note {note_id}")
 
         try:
-            # patient_text = await anthropic_service.generate_patient_summary(
-            #     clinical_text=note.clinical_text
-            # )
+            patient_text = await gemini_service.generate_patient_summary(
+                clinical_text=note.clinical_text
+            )
 
-            # summary.patient_text = patient_text
-            # summary.status = SummaryStatus.READY
-            # summary.generated_at = datetime.now(timezone.utc)
+            summary.patient_text = patient_text
+            summary.status = SummaryStatus.READY
+            summary.generated_at = datetime.now(timezone.utc)
 
-            # await db.commit()
+            await db.commit()
             logger.info(f"Summary generation successfully COMPLETED for note {note_id}")
         except Exception as exc:
             logger.error(f"AI generation failed for note {note_id}: {str(exc)}")
