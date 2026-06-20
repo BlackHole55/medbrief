@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     CELERY_BROKER_URL: str | None = None
     CELERY_BACKEND_URL: str | None = None
 
+    GEMINI_API_KEY: str | None = None
+
     # Pydantic configuration
     model_config = SettingsConfigDict(
         env_file=".env", 
