@@ -54,7 +54,7 @@ async def approve_summary(summary_id: UUID, payload: SummaryApprove, db: AsyncSe
     summary.approved_by = payload.approved_by
     summary.approved_at = datetime.now(timezone.utc)
 
-    await db.commit
+    await db.commit()
     await db.refresh(summary)
 
     return summary
